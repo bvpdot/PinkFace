@@ -1,32 +1,45 @@
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(windowWidth, windowHeight);
 }
+
 let olhoX;
 let olhoY;
 
 function draw() {
   background("#FF0033");
+
+  // posição central do rosto
+  let rostoX = width / 2;
+  let rostoY = height / 2;
+
   fill("#FF9999");
-  circle(200, 200, 300); // rosto
+  circle(rostoX, rostoY, 300); // rosto
+
   fill("white");
-  circle(150, 150, 60); // olho esquerdo
-  circle(250, 150, 60); // olho direito
-  line(150, 270, 250, 235); // boca
+  circle(rostoX - 50, rostoY - 50, 60); // olho esquerdo
+  circle(rostoX + 50, rostoY - 50, 60); // olho direito
+
+  line(rostoX - 50, rostoY + 70, rostoX + 50, rostoY + 35); // boca
+
   fill("#FF6666");
-  triangle(200, 180, 170, 220, 220, 220); // nariz
-  line(123, 115, 178, 113); // sobrancelha esquerda
-  line(225, 116, 279, 106); // sobrancelha direita
-  // circle(150,150,10); // pupila esquerda
-  //circle(250,150,10); // pupila direita
+  triangle(rostoX, rostoY - 20, rostoX - 30, rostoY + 20, rostoX + 20, rostoY + 20); // nariz
 
-  olhoX = map(mouseX, 0, 400, 130, 170);
-  olhoY = map(mouseY, 0, 400, 130, 170);
+  line(rostoX - 77, rostoY - 85, rostoX - 22, rostoY - 87); // sobrancelha esquerda
+  line(rostoX + 25, rostoY - 84, rostoX + 79, rostoY - 94); // sobrancelha direita
 
-  circle(olhoX, olhoY, 10); // nova pupila esquerda
-  circle(olhoX + 100, olhoY, 10); //nova pupila direita
+  // pupilas que acompanham o mouse
+  olhoX = map(mouseX, 0, width, rostoX - 70, rostoX - 30);
+  olhoY = map(mouseY, 0, height, rostoY - 70, rostoY - 30);
+
+  fill("#FF0033");
+  circle(olhoX, olhoY, 10); // pupila esquerda
+  circle(olhoX + 100, olhoY, 10); // pupila direita
+
   if (mouseIsPressed) {
     console.log(mouseX, mouseY);
   }
 }
 
-
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
